@@ -104,8 +104,8 @@ const router = Router();
 
 router.get('/users', async (req, res) => {
   try {
-      const { username, email } = req.query;
-      const users = await getUsers(username, email);
+      const { username, id } = req.query;
+      const users = await getUsers(username, id);
       res.json(users);
   } catch (error) {
       console.error(error);

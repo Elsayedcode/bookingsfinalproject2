@@ -1,13 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-const getUsers = async (username, email) => {
+const getUsers = async (username, id) => {
     let filterOptions = {};
     if (username) {
       filterOptions.username = username;
     }
-    if (email) {
-      filterOptions.email = email;
+    if (id) {
+      filterOptions.id = id;
     }
   
    
