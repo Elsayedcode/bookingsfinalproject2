@@ -7,7 +7,7 @@ const getUsers = async (username, id) => {
       filterOptions.username = username;
     }
     if (id) {
-      filterOptions.id = id;
+      filterOptions.email = id;
     }
   
    
