@@ -6,6 +6,7 @@ import hostsData from "../src/data/hosts.json" assert { type: "json" };
 import amenitiesData from "../src/data/amenities.json" assert { type: "json" };
 import usersData from "../src/data/users.json" assert { type: "json" };
 import reviewsData from "../src/data/reviews.json" assert { type: "json" };
+import bcrypt from 'bcrypt';
 
 
 const prisma = new PrismaClient({ log: ["query", "info", "warn", "error"] });
@@ -17,6 +18,8 @@ async function main() {
   const { amenities } = amenitiesData;
   const { reviews } = reviewsData;
   const { users } = usersData;
+  const saltRounds = 10; // You can adjust the salt rounds as needed
+
 
   for (const property of properties) {
     await prisma.property.upsert({
@@ -58,16 +61,43 @@ async function main() {
     });
   }
 
-
-
-
+  
+  // Assuming `users` is an array of user objects you've parsed from your JSON data
   for (const user of users) {
+    // Hash the password before the upsert operation
+    const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+  
     await prisma.user.upsert({
       where: { id: user.id },
-      update: {},
-      create: user,
+      update: {
+        username: user.username,
+        email: user.email,
+        name: user.name,
+        password: hashedPassword, // Use the hashed password for the update
+        phoneNumber: user.phoneNumber,
+        profilePicture: user.profilePicture,
+      },
+      create: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        name: user.name,
+        password: hashedPassword, // Use the hashed password for the create
+        phoneNumber: user.phoneNumber,
+        profilePicture: user.profilePicture,
+      },
     });
   }
+
+
+  // for (const user of users) {
+  //   await prisma.user.upsert({
+  //     where: { id: user.id },
+  //     update: {},
+  //     create: user,
+      
+  //   });
+  // }
 
   for (const booking of bookings) {
     await prisma.booking.upsert({
