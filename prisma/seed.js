@@ -7,6 +7,7 @@ import amenitiesData from "../src/data/amenities.json" assert { type: "json" };
 import usersData from "../src/data/users.json" assert { type: "json" };
 import reviewsData from "../src/data/reviews.json" assert { type: "json" };
 import bcrypt from 'bcrypt';
+import getUsers from "../src/services/users/getUsers";
 
 
 const prisma = new PrismaClient({ log: ["query", "info", "warn", "error"] });

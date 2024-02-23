@@ -21,7 +21,7 @@ router.get('/users', async (req, res) => {
   }
 });
 
-router.post("/", auth, async (req, res, next) => {
+router.post("/login", auth, async (req, res, next) => {
   try {
     // Including password in the destructure from req.body
     const { username, name, email, phoneNumber, profilePicture, password } = req.body;
