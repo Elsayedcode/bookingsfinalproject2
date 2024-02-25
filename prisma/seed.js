@@ -7,7 +7,6 @@ import amenitiesData from "../src/data/amenities.json" assert { type: "json" };
 import usersData from "../src/data/users.json" assert { type: "json" };
 import reviewsData from "../src/data/reviews.json" assert { type: "json" };
 import bcrypt from 'bcrypt';
-import getUsers from "../src/services/users/getUsers";
 
 
 const prisma = new PrismaClient({ log: ["query", "info", "warn", "error"] });
@@ -20,23 +19,6 @@ async function main() {
   const { reviews } = reviewsData;
   const { users } = usersData;
   const saltRounds = 10; // You can adjust the salt rounds as needed
-
-
-  for (const property of properties) {
-    await prisma.property.upsert({
-      where: { id: property.id },
-      update: {title: property.title,
-        description: property.description,
-        location: property.location,
-        pricePerNight: property.pricePerNight,
-        bedRoomCount: property.bedRoomCount,
-        bathRoomCount: property.bathRoomCount,
-        maxGuestCount: property.maxGuestCount,
-        rating: property.rating,},
-      
-      create: property,
-    });
-  }
 
   for (const amenity of amenities) {
     await prisma.amenity.upsert({
@@ -54,14 +36,22 @@ async function main() {
     });
   }
 
-  for (const review of reviews) {
-    await prisma.review.upsert({
-      where: { id: review.id },
-      update: {},
-      create: review,
+
+  for (const property of properties) {
+    await prisma.property.upsert({
+      where: { id: property.id },
+      update: {title: property.title,
+        description: property.description,
+        location: property.location,
+        pricePerNight: property.pricePerNight,
+        bedRoomCount: property.bedRoomCount,
+        bathRoomCount: property.bathRoomCount,
+        maxGuestCount: property.maxGuestCount,
+        rating: property.rating,},
+      
+      create: property,
     });
   }
-
   
   // Assuming `users` is an array of user objects you've parsed from your JSON data
   for (const user of users) {
@@ -90,15 +80,14 @@ async function main() {
     });
   }
 
+  for (const review of reviews) {
+    await prisma.review.upsert({
+      where: { id: review.id },
+      update: {},
+      create: review,
+    });
+  }
 
-  // for (const user of users) {
-  //   await prisma.user.upsert({
-  //     where: { id: user.id },
-  //     update: {},
-  //     create: user,
-      
-  //   });
-  // }
 
   for (const booking of bookings) {
     await prisma.booking.upsert({
@@ -120,6 +109,8 @@ async function main() {
       },
     });
   };
+
+  
 }
 
 
