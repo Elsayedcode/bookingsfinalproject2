@@ -12,10 +12,25 @@ import auth from "../middleware/auth.js";
 const router = Router();
 
 // POST /bookings - Create a new booking
-router.post('/', auth, async (req, res) => {
+router.post('/',  async (req, res) => {
     try {
+        console.log("booking test")
         const bookingData = req.body;
-        const newBooking = await createBooking(bookingData);
+        console.log(bookingData)
+        const { userId,
+        propertyId,
+        checkinDate,
+        checkoutDate,
+        numberOfGuests,
+        totalPrice,
+        bookingStatus} = req.body;
+        const newBooking = await createBooking(userId,
+            propertyId,
+            checkinDate,
+            checkoutDate,
+            numberOfGuests,
+            totalPrice,
+            bookingStatus);
         res.status(201).json(newBooking);
     } catch (error) {
         res.status(500).json({ error: error.message });

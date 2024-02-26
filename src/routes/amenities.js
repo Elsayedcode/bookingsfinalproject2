@@ -23,6 +23,7 @@ router.post('/', auth, async (req, res) => {
 // GET /amenities - Get all amenities
 router.get('/', async (req, res) => {
     try {
+        console.log("check the code")
         const amenities = await getAmenities();
         res.json(amenities);
     } catch (error) {

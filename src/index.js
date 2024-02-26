@@ -7,7 +7,7 @@ import bookingsRouter  from "./routes/bookings.js";
 import propertiesRouter  from "./routes/properties.js";
 import reviewsRouter  from "./routes/reviews.js";
 import hostsRouter  from "./routes/hosts.js";
-import usersRouter  from "./routes/amenities.js";
+import usersRouter  from "./routes/users.js";
 
 import loginRouter from "./routes/login.js";
 import log from "./middleware/logMiddleware.js";
@@ -49,6 +49,7 @@ app.use('/bookings', bookingsRouter);
 app.use('/properties', propertiesRouter);
 app.use('/amenities', amenitiesRouter);
 app.use('/reviews', reviewsRouter);
+app.use('/login', loginRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello world!");

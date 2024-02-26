@@ -9,9 +9,11 @@ import auth from "../middleware/auth.js";
 const router = Router();
 
 // GET /hosts?name=someName
-router.get('/hosts', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const name = req.query.name || 'http://localhost:3000/hosts?name=Linda+Pollen'; 
+      console.log("test hosts")
+      const { name } = req.query;        
+        
         // Get the 'name' query parameter
         const hosts = await getHosts(name); // Call the getHosts function with the name
         res.json(hosts); // Send the retrieved hosts as a JSON response
@@ -23,7 +25,7 @@ router.get('/hosts', async (req, res) => {
 });
 
 // POST /bookings - Create a new booking
-router.post('/', auth, async (req, res) => {
+router.post('/',  async (req, res) => {
     try {
         const hostData = req.body;
         const newHost = await createHost(hostData);
@@ -48,7 +50,7 @@ router.get('/:id', async (req, res) => {
   });
   
   // Update a review by ID
-  router.put('/:id', auth, async (req, res) => {
+  router.put('/:id',  async (req, res) => {
     try {
       const updatedHost = await updateHostById(req.params.id, req.body);
       res.json(updatedHost);

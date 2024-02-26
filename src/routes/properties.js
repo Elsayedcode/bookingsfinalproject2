@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post("/", auth, async (req, res, next) => {
+router.post("/",  async (req, res, next) => {
     try {
       const { hostId, title, description, location, pricePerNight, bedRoomCount, bathRoomCount, maxGuestCount, rating, amenityIds } = req.body;
       
@@ -60,7 +60,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", auth, async (req, res, next) => {
+router.delete("/:id",  async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletedProperty = await deletePropertyById(id);
@@ -80,7 +80,7 @@ router.delete("/:id", auth, async (req, res, next) => {
   }
 });
 
-router.put("/:id", auth, async (req, res, next) => {
+router.put("/:id",  async (req, res, next) => {
   try {
     const { id } = req.params;
     const { hostId, title, description, location, pricePerNight, bedRoomCount, bathRoomCount, maxGuestCount, rating, amenityIds } = req.body;
