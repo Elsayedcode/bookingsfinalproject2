@@ -6,8 +6,8 @@ const createBooking = async ( userId, propertyId, checkinDate, checkoutDate, num
   try {
     const booking = await prisma.booking.create({
       data: {
-        user: { connect: { id: userId } },
-        property: { connect: { id: propertyId } }, // Assuming a booking is for a single property
+        userId,
+        propertyId, // Assuming a booking is for a single property
         checkinDate,
         checkoutDate,
         numberOfGuests,

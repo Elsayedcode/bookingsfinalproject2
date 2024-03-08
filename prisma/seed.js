@@ -20,6 +20,77 @@ async function main() {
   const { users } = usersData;
   const saltRounds = 10; // You can adjust the salt rounds as needed
 
+  
+  for (const host of hosts) {
+    await prisma.host.upsert({
+      where: { id: host.id },
+      update: {},
+      create: host,
+    });
+  }
+  
+  // First, ensure all users are seeded
+for (const user of users) {
+  const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+  await prisma.user.upsert({
+    where: { id: user.id },
+    update: {
+      username: user.username,
+      email: user.email,
+      name: user.name,
+      password: hashedPassword,
+      phoneNumber: user.phoneNumber,
+      profilePicture: user.profilePicture,
+    },
+    create: {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      name: user.name,
+      password: hashedPassword,
+      phoneNumber: user.phoneNumber,
+      profilePicture: user.profilePicture,
+    },
+  });
+}
+
+// Then seed properties
+for (const property of properties) {
+  console.log("property:", property)  
+  await prisma.property.upsert({
+    where: { id: property.id },
+    update: {},
+    create: property,
+  });
+}
+
+// After properties, you can seed bookings
+for (const booking of bookings) {
+  await prisma.booking.upsert({
+    where: { id: booking.id },
+    update: {},
+    create: {
+      id: booking.id,
+      checkinDate: new Date(booking.checkinDate),
+      checkoutDate: new Date(booking.checkoutDate),
+      numberOfGuests: booking.numberOfGuests,
+      totalPrice: booking.totalPrice,
+      bookingStatus: booking.bookingStatus,
+      user: {
+        connect: { id: booking.userId },
+      },
+      property: {
+        connect: { id: booking.propertyId },
+      },
+    },
+  });
+}
+
+// Continue with other entities as before...
+
+  
+  
+  
   for (const amenity of amenities) {
     await prisma.amenity.upsert({
       where: { id: amenity.id },
@@ -28,57 +99,7 @@ async function main() {
     });
   }
 
-  for (const host of hosts) {
-    await prisma.host.upsert({
-      where: { id: host.id },
-      update: {},
-      create: host,
-    });
-  }
-
-
-  for (const property of properties) {
-    await prisma.property.upsert({
-      where: { id: property.id },
-      update: {title: property.title,
-        description: property.description,
-        location: property.location,
-        pricePerNight: property.pricePerNight,
-        bedRoomCount: property.bedRoomCount,
-        bathRoomCount: property.bathRoomCount,
-        maxGuestCount: property.maxGuestCount,
-        rating: property.rating,},
-      
-      create: property,
-    });
-  }
   
-  // Assuming `users` is an array of user objects you've parsed from your JSON data
-  for (const user of users) {
-    // Hash the password before the upsert operation
-    const hashedPassword = await bcrypt.hash(user.password, saltRounds);
-  
-    await prisma.user.upsert({
-      where: { id: user.id },
-      update: {
-        username: user.username,
-        email: user.email,
-        name: user.name,
-        password: hashedPassword, // Use the hashed password for the update
-        phoneNumber: user.phoneNumber,
-        profilePicture: user.profilePicture,
-      },
-      create: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        name: user.name,
-        password: hashedPassword, // Use the hashed password for the create
-        phoneNumber: user.phoneNumber,
-        profilePicture: user.profilePicture,
-      },
-    });
-  }
 
   for (const review of reviews) {
     await prisma.review.upsert({
@@ -87,28 +108,7 @@ async function main() {
       create: review,
     });
   }
-
-
-  for (const booking of bookings) {
-    await prisma.booking.upsert({
-      where: { id: booking.id },
-      update: {},
-      create: {
-        id: booking.id,
-        checkinDate: new Date(booking.checkinDate),
-        checkoutDate: new Date(booking.checkoutDate),
-        numberOfGuests: booking.numberOfGuests, // Ensure the field name matches the model
-        totalPrice: booking.totalPrice,
-        bookingStatus: booking.bookingStatus,
-        user: { // Assuming the relation field is named 'user'
-          connect: { id: booking.userId }, // No map needed, directly connect the userId
-        },
-        property: { // Assuming the relation field is named 'property'
-          connect: { id: booking.propertyId },
-        },
-      },
-    });
-  };
+  
 
   
 }

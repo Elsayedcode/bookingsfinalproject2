@@ -1,35 +1,40 @@
+
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-const createProperty = async (data) => {
+const createProperty = async ({
+  hostId,
+  title,
+  description,
+  location,
+  pricePerNight,
+  bedroomCount,
+  bathRoomCount,
+  maxGuestCount,
+  rating,
+  amenities
+}) => {
   try {
-    const { hostId, title, description, location, pricePerNight, bedRoomCount, bathRoomCount, maxGuestCount, rating, amenityIds } = data;
-
-    // Validation logic here (if needed)
-
     const property = await prisma.property.create({
       data: {
         hostId,
-        title,
+        title, // Make sure this field is provided, as your error indicated it was missing
         description,
         location,
         pricePerNight,
-        bedRoomCount,
+        bedroomCount,
         bathRoomCount,
         maxGuestCount,
         rating,
-        amenities: amenityIds && amenityIds.length > 0 ? {
-          connect: amenityIds.map(id => ({ id })),
-        } : undefined,
+        amenities, // Ensure this is correctly formatted for what Prisma expects
       },
     });
-
     return property;
   } catch (error) {
     console.error('Error creating property:', error);
-    // Handle or rethrow the error as appropriate for your application
-    throw error;
+    throw error; // or handle error as appropriate
   }
 };
 
 export default createProperty;
+
