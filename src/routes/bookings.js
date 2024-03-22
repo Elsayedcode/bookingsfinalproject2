@@ -25,7 +25,8 @@ router.post('/',  async (req, res) => {
         numberOfGuests,
         totalPrice,
         bookingStatus} = req.body;
-        const newBooking = await createBooking(userId,
+        const newBooking = await createBooking(
+            userId,
             propertyId,
             checkinDate,
             checkoutDate,
@@ -34,7 +35,7 @@ router.post('/',  async (req, res) => {
             bookingStatus);
         res.status(201).json(newBooking);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(400).json({ error: error.message });
     }
 });
 
@@ -42,11 +43,12 @@ router.post('/',  async (req, res) => {
 router.delete('/:id',  async (req, res) => {
     try {
         const result = await deleteBookingById(req.params.id);
-        if (!result) {
+        if (result) {
+            res.status(200).json({ message: 'Booking successfully deleted' });
+        } else {
             return res.status(404).json({ message: 'Booking not found' });
         }
-        // Change response to 200 OK with a message
-        res.status(200).json({ message: 'Booking successfully deleted' });
+        
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -69,11 +71,13 @@ router.get('/:id', async (req, res) => {
 // GET /bookings?userId=...
 router.get('/', async (req, res) => {
     try {
+    //   const userId = req.query.userId;
       const userId = req.query.userId;
       const bookings = await getBookings({ userId });
       res.json(bookings);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json([error]);
+      //: error.message 
     }
   });
 
@@ -83,12 +87,15 @@ router.put('/:id',  async (req, res) => {
     try {
         
         const booking = await updateBookingById(req.params.id, req.body);
-        if (!booking) {
-            return res.status(404).json({ message: 'Booking not found' });
+        if (booking) {
+            return res.status(200).json({ message: 'Booking is updated' });
+
+        } else{
+             res.status(404).json({ message: 'Booking not found' });
         }
-        res.json(booking);
+        return res.json(booking);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(404).json({ error: error.message });
     }
 });
 

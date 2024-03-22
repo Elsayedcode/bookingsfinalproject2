@@ -10,13 +10,30 @@ import auth from "../middleware/auth.js";
 const router = Router();
 
 
+router.get('/', async (req, res) => {
+  try {
+    console.log("test hosts")
+    const { name } = req.query;    
+        
+      
+      // Get the 'name' query parameter
+      const hosts = await getHosts(name); // Call the getHosts function with the name
+      res.status(200).json(hosts); // Send the retrieved hosts as a JSON response
+  } catch (error) {
+      // Error handling: send a 500 internal server error response
+      console.error(error); // Log the error for debugging
+      res.status(500).json( [error] );
+  }
+});
+
+
 router.post('/', async (req, res) => {
   try {
       const { username, password, name, email, phoneNumber, profilePicture, aboutMe } = req.body;
       const newHost = await createHost(username, password, name, email, phoneNumber, profilePicture, aboutMe);
       res.status(201).json(newHost);
   } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(400).json({ error: error.message });
   }
 });
 
@@ -25,13 +42,18 @@ router.post('/', async (req, res) => {
   router.delete('/:id',  async (req, res) => {
     try {
       
-      const { id } = req.params;
-        const host = await deleteHostById(id);
+      // const { id } = req.params.id;
+      const  id  = req.params.id;
+      console.log("req.params:",req.params)
+      console.log("req.params.id:",req.params.id)
+      console.log("id regel 46:",id)
+      const host = await deleteHostById(id);
+      console.log("host regel 48:", host)
       res.status(200).json({
         message: `host ${id} is verwijderd`
     })
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(404).json({ error: error.message });
     }
   });
 
@@ -40,7 +62,7 @@ router.get('/:id', async (req, res) => {
   try {
     const host = await getHostById(req.params.id);
     if (host) {
-      res.json(host);
+      res.status(200).json(host);
     } else {
       res.status(404).json({ error: 'Host not found' });
     }
@@ -49,28 +71,14 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-  router.get('/', async (req, res) => {
-    try {
-      console.log("test hosts")
-      const { name } = req.query;        
-        
-        // Get the 'name' query parameter
-        const hosts = await getHosts(name); // Call the getHosts function with the name
-        res.json(hosts); // Send the retrieved hosts as a JSON response
-    } catch (error) {
-        // Error handling: send a 500 internal server error response
-        console.error(error); // Log the error for debugging
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Update a review by ID
+  
+    // Update a review by ID
 router.put('/:id',  async (req, res) => {
   try {
     const updatedHost = await updateHostById(req.params.id, req.body);
-    res.json(updatedHost);
+    res.status(200).json(updatedHost);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(404).json({ error: error.message });
   }
 });
   

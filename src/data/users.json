@@ -1,9 +1,10 @@
+
 {
   "users": [
     {
       "id": "a1234567-89ab-cdef-0123-456789abcdef",
       "username": "jdoe",
-      "password": "password12",
+      "password": "password123",
       "name": "John Doe",
       "email": "johndoe@example.com",
       "phoneNumber": "123-456-7890",
@@ -12,7 +13,7 @@
     {
       "id": "b2345678-90cd-ef01-2345-6789abcdef01",
       "username": "asimpson",
-      "password": "password23",
+      "password": "password234",
       "name": "Anna Simpson",
       "email": "annasimpson@example.com",
       "phoneNumber": "123-456-7891",
@@ -21,7 +22,7 @@
     {
       "id": "c3456789-01de-f012-3456-789abcdef012",
       "username": "rjames",
-      "password": "password34",
+      "password": "password345",
       "name": "Robert James",
       "email": "robertjames@example.com",
       "phoneNumber": "123-456-7892",
@@ -30,7 +31,7 @@
     {
       "id": "d4567890-12ef-0123-4567-89abcdef0123",
       "username": "klopez",
-      "password": "password45",
+      "password": "password456",
       "name": "Karen Lopez",
       "email": "karenlopez@example.com",
       "phoneNumber": "123-456-7893",
@@ -39,7 +40,7 @@
     {
       "id": "e5678901-23f0-1234-5678-9abcdef01234",
       "username": "smiller",
-      "password": "password56",
+      "password": "password567",
       "name": "Steve Miller",
       "email": "stevemiller@example.com",
       "phoneNumber": "123-456-7894",

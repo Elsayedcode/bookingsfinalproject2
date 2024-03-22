@@ -9,7 +9,7 @@ import auth from "../middleware/auth.js";
 
 const router = Router();
 
-router.post("/",  async (req, res, next) => {
+router.post("/",  async (req, res) => {
   try {
     const { hostId, title, description, location, pricePerNight, bedroomCount, bathRoomCount, maxGuestCount, rating, amenities } = req.body;
     
@@ -30,11 +30,11 @@ router.post("/",  async (req, res, next) => {
     const newProperty = await createProperty(propertyData);
     res.status(201).json(newProperty);
   } catch (error) {
-    next(error);
-  }
+    res.status(400).json({ error: error.message });
+}
 });
 
-router.delete("/:id",  async (req, res, next) => {
+router.delete("/:id",  async (req, res) => {
   try {
     const { id } = req.params;
     const deletedProperty = await deletePropertyById(id);
@@ -49,9 +49,9 @@ router.delete("/:id",  async (req, res, next) => {
         message: `Property with id ${id} not found`,
       });
     }
-  } catch (error) {
-    next(error);
-  }
+   } catch (error) {
+    res.status(404).json({ error: error.message });
+}
 });
 
 // GET /properties?location=...&pricePerNight=...
@@ -69,24 +69,25 @@ router.get('/', async (req, res) => {
 
   
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const property = await getPropertyById(id);
-
-    if (!property) {
-      res.status(404).json({ message: `User with id ${id} not found` });
-    } else {
+console.log("check property " ,property)
+    if (property) {
       res.status(200).json(property);
+    } 
+    else {
+      res.status(404).json({ message: `property with id ${id} not found` }); 
     }
   } catch (error) {
-    next(error);
-  }
+    res.status(500).json({ error: error.message });
+}
 });
 
 
 
-router.put("/:id",  async (req, res, next) => {
+router.put("/:id",  async (req, res) => {
   try {
     const { id } = req.params;
     const { hostId, title, description, location, pricePerNight, bedroomCount, bathroomCount, maxGuestCount, rating, amenityIds } = req.body;
@@ -97,13 +98,13 @@ router.put("/:id",  async (req, res, next) => {
         message: `Property with id ${id} successfully updated`,
       });
     } else {
-      res.status(404).json({
+      res.status(201).json({
         message: `Property with id ${id} not found`,
       });
     }
   } catch (error) {
-    next(error);
-  }
+    res.status(404).json({ error: error.message });
+}
 });
 
 export default router;

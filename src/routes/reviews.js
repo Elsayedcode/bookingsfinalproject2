@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
     const review = await createReview(userId, propertyId, rating, comment);
     res.status(201).json(review);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 });
 
@@ -30,7 +30,7 @@ router.delete('/:id', async (req, res) => {
       }
       res.status(200).json({ message: 'Review successfully deleted' });
   } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(404).json({ error: error.message });
   }
 });
 
@@ -66,7 +66,7 @@ router.put('/:id',  async (req, res) => {
     const updatedReview = await updateReviewById(req.params.id, req.body);
     res.json(updatedReview);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(404).json({ error: error.message });
   }
 });
 
