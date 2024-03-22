@@ -7,7 +7,6 @@ const createAmenity = async ( name) => {
     name,
   };
 
-  //try {
     const ontbrekendeVelden = []
     
   if (!name) {
@@ -20,11 +19,7 @@ const createAmenity = async ( name) => {
     data: newAmenity
    });
   return amenity;
-// } catch (error) {
-//   // Handle or throw the error as appropriate for your application
-//   console.error('Error adding amenity:', error);
-//   throw error;
-// };
+
 };
 
 export default createAmenity;

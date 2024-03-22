@@ -7,9 +7,7 @@ const login = async (username, submittedPassword) => {
   const secretKey = process.env.AUTH_SECRET_KEY || "my-secret-key";
   const prisma = new PrismaClient();
 
-  //try {
     // Find the user by username
-    
     const user = await prisma.user.findUnique({
       where: { username },
     });
@@ -26,21 +24,10 @@ const login = async (username, submittedPassword) => {
     }
     
 
-    // Compare submitted password with the hashed password stored in the database
     
-
-    // if (!isPasswordValid) {
-    //   throw new Error('Password is incorrect');
-    // }
-
     // Generate JWT token if the password is correct
     const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: '2h' });
     return { token }; // Return an object with the token
-  // } 
-  // catch (error) {
-  //   return null;
-  //   //return (error.message);
-  // }
 };
 
 export default login;

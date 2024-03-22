@@ -42,38 +42,11 @@ router.delete("/:id", async (req, res) => {
     if(!result) {
         return res.status(404).json({ message: 'user not found' });
     }
-  //   catch (error) {
-  //     console.error("Error deleting user:", error);
-  //     throw error;
-  //   }
-  // };
+  
 } catch (error) {
     res.status(404).json({ error: error.message });
 }
 });
-//   try {
-    
-//     const { id } = req.params;
-//     console.log("test delete")
-//     const deletedUser = await deleteUserById(id);
-
-//     // Assuming `deleteUserById` now throws an error if the user doesn't exist
-//     res.status(200).send({
-//       message: `User with id ${id} successfully deleted`,
-//       deletedUser,
-//     });
-//   } catch (error) {
-//     if (error.name === "NotFoundError") {
-//       // Custom error for not found user
-//       res.status(404).json({
-//         message: `User with id not found`,
-//       });
-//     } else {
-//       // Other unexpected errors
-//       next(error);
-//     }
-//   }
-// });
 
 router.get("/:id", async (req, res, next) => {
   try {

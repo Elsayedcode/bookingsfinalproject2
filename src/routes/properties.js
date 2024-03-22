@@ -66,9 +66,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-
-  
-
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -84,8 +81,6 @@ console.log("check property " ,property)
     res.status(500).json({ error: error.message });
 }
 });
-
-
 
 router.put("/:id",  async (req, res) => {
   try {

@@ -17,7 +17,6 @@ router.get('/', async (req, res,next) => {
         const amenities = await getAmenities();
         res.json(amenities);
     } catch (error) {
-        //res.status(500).json({ error: error.message });
         next(error);
     }
 });
@@ -43,9 +42,7 @@ router.get('/:id', async (req, res, next) => {
         } else{
             res.status(200).json(amenity);
         }
-        //res.json(amenity);
     } catch (error) {
-        //res.status(500).json({ error: error.message });
         next(error);
     } 
 });
@@ -60,11 +57,9 @@ router.delete('/:id', auth,async (req, res,next) => {
         } else {
             res.status(404).json({ message: `Amenity with id ${id} not found` });
         }
-        // Change here to return 200 OK status with a message
         
     } catch (error) {
         next(error);
-        //res.status(404).json({ error: error.message });
     }
 });
 
@@ -84,7 +79,6 @@ router.put('/:id', auth, async (req, res, next) => {
         }
     } catch (error) {
         next(error);
-        //res.status(404).json({ error: error.message });
     }
 });
 

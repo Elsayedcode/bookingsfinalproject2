@@ -10,7 +10,6 @@ const getUsers = async (username, id) => {
       filterOptions.email = id;
     }
   
-   
     return await prisma.user.findMany({
       where: filterOptions,
       select: {

@@ -17,11 +17,10 @@ router.get('/', async (req, res) => {
         
       
       // Get the 'name' query parameter
-      const hosts = await getHosts(name); // Call the getHosts function with the name
-      res.status(200).json(hosts); // Send the retrieved hosts as a JSON response
+      const hosts = await getHosts(name); 
+      res.status(200).json(hosts); 
   } catch (error) {
-      // Error handling: send a 500 internal server error response
-      console.error(error); // Log the error for debugging
+      console.error(error); 
       res.status(500).json( [error] );
   }
 });
@@ -42,7 +41,6 @@ router.post('/', async (req, res) => {
   router.delete('/:id',  async (req, res) => {
     try {
       
-      // const { id } = req.params.id;
       const  id  = req.params.id;
       console.log("req.params:",req.params)
       console.log("req.params.id:",req.params.id)

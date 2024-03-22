@@ -71,13 +71,11 @@ router.get('/:id', async (req, res) => {
 // GET /bookings?userId=...
 router.get('/', async (req, res) => {
     try {
-    //   const userId = req.query.userId;
       const userId = req.query.userId;
       const bookings = await getBookings({ userId });
       res.json(bookings);
     } catch (error) {
       res.status(500).json([error]);
-      //: error.message 
     }
   });
 

@@ -8,12 +8,7 @@ const updateBookingById = async (id, updatedBooking) => {
 
   const { propertyId, userId, ...rest } = updatedBooking;
   const ontbrekendeVelden = []
-//   if (!userId) {
-//        ontbrekendeVelden.push('userId');
-// }
-// if (!propertyId) {
-//   ontbrekendeVelden.push('propertyId');
-// }
+
 if (!id) {
   ontbrekendeVelden.push('id')
 }

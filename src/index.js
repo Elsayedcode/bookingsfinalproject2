@@ -39,12 +39,6 @@ app.get("/", (req, res) => {
 });
 
 
-
-// Trace errors
-// The error handler must be registered before any other error middleware and after all controllers
-// app.use(Sentry.Handlers.errorHandler());
-
-// Error handling
 app.use(errorHandler);
 
 app.listen(3000, function() {
