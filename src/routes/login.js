@@ -13,7 +13,7 @@ router.post("/", async (req, res, next) => {
     const token = await login(username, password);
 
     if (!token) {
-      res.status(401).json({ message: 'Password is incorrect' });
+      res.status(401).json({ error: 'Password is incorrect' });
     } else {
       res.status(200).json({ message: "Successfully logged in!", token });
     }
