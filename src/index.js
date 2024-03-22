@@ -17,27 +17,7 @@ import logger from './utils/log.js';
 
 
 const app = express();
-// Sentry
-// Sentry.init({
-//   dsn: "https://d46236cba806a44be7bbace87ef65a9e@o4506406537658368.ingest.sentry.io/4506646787194880",
 
-//   integrations: [
-//     // enable HTTP calls tracing
-//     new Sentry.Integrations.Http({
-//       tracing: true,
-//     }),
-//     // enable Express.js middleware tracing
-//     new Sentry.Integrations.Express({
-//       app,
-//     }),
-//   ],
-//   // Performance Monitoring
-//   tracesSampleRate: 1.0, // Capture 100% of the transactions, reduce in production!,
-// });
-
-// // Trace incoming requests
-// app.use(Sentry.Handlers.requestHandler());
-// app.use(Sentry.Handlers.tracingHandler());
 
 // Global middleware
 app.use(express.json());
