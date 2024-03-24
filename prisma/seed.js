@@ -64,7 +64,7 @@ for (const property of properties) {
   });
 }
 
-// After properties, you can seed bookings
+// After properties, seeding bookings
 for (const booking of bookings) {
   await prisma.booking.upsert({
     where: { id: booking.id },
@@ -85,11 +85,6 @@ for (const booking of bookings) {
     },
   });
 }
-
-// Continue with other entities as before...
-
-  
-  
   
   for (const amenity of amenities) {
     await prisma.amenity.upsert({
@@ -99,8 +94,6 @@ for (const booking of bookings) {
     });
   }
 
-  
-
   for (const review of reviews) {
     await prisma.review.upsert({
       where: { id: review.id },
@@ -108,12 +101,8 @@ for (const booking of bookings) {
       create: review,
     });
   }
-  
-
-  
+    
 }
-
-
 main()
 .then(async () => {
   await prisma.$disconnect();
